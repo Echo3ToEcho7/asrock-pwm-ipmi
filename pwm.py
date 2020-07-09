@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import run_cmd
 import argparse
-
+import time
 MAXFAN = 6
 
 parser = argparse.ArgumentParser(description='Read information about and control fans on ASRock boards with IPMI.', prog='asrock-pwm-ipmi')
@@ -17,6 +17,7 @@ args = parser.parse_args()
 #print(args.info)
 #print(args)
 #print(args.fanplusspeed)
+fanChanged = False
 if args.info is False and args.fanplusspeed == []:
 	print("Nothing to do! See --help for usage.")
 	quit
@@ -27,11 +28,15 @@ if args.fanplusspeed != []:
 			continue
 		fan, speed = fanopt.split(":")
 		run_cmd.setSpeed(int(fan), int(speed))
+		fanChanged = True
 		if int(speed) == 0:
 			print("Set speed of FAN" + fan + " to Auto.")
 		else:
 			print("Set speed of FAN" + fan + " to " + speed + "%.")
 if args.info is True:
+	if fanChanged is True:
+		print("\nWaiting for fans to adjust...")
+		time.sleep(5)
 	print("\nRetrieving fan speeds...\n")
 	for line in run_cmd.getFanInfo():
 		print(line)
