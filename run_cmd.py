@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import subprocess as sp
+import json
 
 def setSpeed(fan, setspeed):
 	speeds, speedsRaw = getAllSpeeds()
@@ -32,7 +33,7 @@ def getFanInfo():
 	sensorinfo, err = cmdoutput.communicate()
 	#print(sensorinfo.splitlines())
 	faninfo = []
-	speeds, speedsRaw= getAllSpeeds()
+	speeds, speedsRaw = getAllSpeeds()
 	for line in sensorinfo.splitlines():
 		if "FAN" in str(line):
 			faninfo.append(str(line))
@@ -46,3 +47,10 @@ def getFanInfo():
 			faninfo[index] += "%"
 		#print(faninfo[index])
 	return faninfo
+
+def getTemp():
+	cmdoutput = sp.Popen(["sensors", "-Aj", "zenpower-*"], stdout=sp.PIPE)
+	sensorjson, err = cmdoutput.communicate()
+	sensordata = json.loads(sensorjson)
+	temp = sensordata["zenpower-pci-00c3"]["Tdie"]["temp1_input"]
+	return temp
