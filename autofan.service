@@ -1,0 +1,10 @@
+[Unit]
+Description=ASRock IPMI automatic fan control
+
+[Service]
+WorkingDirectory=/root/asrock-pwm-ipmi/
+ExecStart=/root/asrock-pwm-ipmi/asrock-pwm-ipmi -a
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

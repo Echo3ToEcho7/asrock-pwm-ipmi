@@ -58,7 +58,7 @@ while args.auto is True:
                 	speeds.append(str(i) + ":" + str(speed))
 	iterateFans(speeds)
 	#print(speeds)
-	time.sleep(1)
+	#time.sleep(1)
 
 if args.info is False and args.fanplusspeed == []:
 	print("Nothing to do! See --help for usage.")
