@@ -3,7 +3,7 @@ Description=ASRock IPMI automatic fan control
 
 [Service]
 WorkingDirectory=/root/asrock-pwm-ipmi/
-ExecStart=/root/asrock-pwm-ipmi/asrock-pwm-ipmi -a
+ExecStart=/root/asrock-pwm-ipmi/asrock-pwm-ipmi -aq
 Restart=always
 
 [Install]

@@ -17,7 +17,8 @@ parser.add_argument('-i', '--info', action="store_true", default=False,
                    help='Read fan information')
 parser.add_argument('-a', '--auto', action="store_true", default=False,
 		   help='Service to control fans based on temperature')
-
+parser.add_argument('-q', '--quiet', action="store_true", default=False,
+		   help='Hide output')
 args = parser.parse_args()
 #print(args.info)
 #print(args)
@@ -32,10 +33,11 @@ def iterateFans(info):
                 fan, speed = fanopt.split(":")
                 run_cmd.setSpeed(int(fan), int(speed))
                 fanChanged = True
-                if int(speed) == 0:
-                        print("Set speed of FAN" + fan + " to Auto.")
-                else:
-                        print("Set speed of FAN" + fan + " to " + speed + "%.")
+                if args.quiet is False:
+                        if int(speed) == 0:
+                                print("Set speed of FAN" + fan + " to Auto.")
+                        else:
+                                print("Set speed of FAN" + fan + " to " + speed + "%.")
 
 
 while args.auto is True:
@@ -44,11 +46,9 @@ while args.auto is True:
 	if temp < MINTEMP:
 		for i in range(2, 7):
 			speeds.append(str(i) + ":1")
-		#speeds = "2:1 3:1 4:1 5:1 6:1"
 	elif temp > MAXTEMP:
 		for i in range(2, 7):
                 	speeds.append(str(i) + ":100")
-		#speeds = "2:100 3:100 4:100 5:100 6:100"
 	else:
 		base = temp - MINTEMP
 		max = MAXTEMP - MINTEMP
@@ -57,13 +57,11 @@ while args.auto is True:
 		for i in range(2, 7):
                 	speeds.append(str(i) + ":" + str(speed))
 	iterateFans(speeds)
-	#print(speeds)
-	#time.sleep(1)
 
-if args.info is False and args.fanplusspeed == []:
+if args.info is False and len(args.fanplusspeed) == 0:
 	print("Nothing to do! See --help for usage.")
 	quit
-if args.fanplusspeed != []:
+if len(args.fanplusspeed) != 0:
 	iterateFans(args.fanplusspeed)
 if args.info is True:
 	if fanChanged is True:
