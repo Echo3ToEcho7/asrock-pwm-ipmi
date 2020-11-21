@@ -12,8 +12,8 @@ This is a script to control 4-pin PWM fans on ASRock Rack motherboards with IPMI
                   to 0 for auto.
 
     optional arguments:
-      -h, --help  show this help message and exit
-      -i, --info  Read fan information
-      -a, --auto  Service to control fans based on temperature
+      -h, --help   show this help message and exit
+      -i, --info   Read fan information
+      -a, --auto   Service to control fans based on temperature
       -q, --quiet  Hide output
   
