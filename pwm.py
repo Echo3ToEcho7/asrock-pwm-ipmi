@@ -11,14 +11,10 @@ MINTEMP = 30
 MAXTEMP = 65
 
 parser = argparse.ArgumentParser(description='Read information about and control fans on ASRock boards with IPMI.', prog='asrock-pwm-ipmi')
-parser.add_argument('fanplusspeed', nargs='*', metavar='FAN:SPEED',
-                   	help='Fan to change the speed of, and the speed, separated by \':\'. Set to 0 for auto.')
-parser.add_argument('-i', '--info', action="store_true", default=False,
-                   	help='Read fan information')
-parser.add_argument('-a', '--auto', action="store_true", default=False,
-		   			help='Service to control fans based on temperature')
-parser.add_argument('-q', '--quiet', action="store_true", default=False,
-		   			help='Hide output')
+parser.add_argument('fanplusspeed', nargs='*', metavar='FAN:SPEED', help='Fan to change the speed of, and the speed, separated by \':\'. Set to 0 for auto.')
+parser.add_argument('-i', '--info',  action="store_true", default=False, help='Read fan information')
+parser.add_argument('-a', '--auto',  action="store_true", default=False, help='Service to control fans based on temperature')
+parser.add_argument('-q', '--quiet', action="store_true", default=False, help='Hide output')
 args = parser.parse_args()
 
 #print(args)
