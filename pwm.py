@@ -22,8 +22,8 @@ args = parser.parse_args()
 fanChanged = False
 
 def iterateFans(info):
-	for fanopt in info:
-    	if str(fanopt.split(":"))[2:-2] == fanopt or int(fanopt.split(":")[0]) < 1 or int(fanopt.split(":")[0]) > MAXFAN:
+    for fanopt in info:
+        if str(fanopt.split(":"))[2:-2] == fanopt or int(fanopt.split(":")[0]) < 1 or int(fanopt.split(":")[0]) > MAXFAN:
             print("Improper format!")
             continue
         fan, speed = fanopt.split(":")
@@ -33,35 +33,35 @@ def iterateFans(info):
             if int(speed) == 0:
                 print("Set speed of FAN" + fan + " to Auto.")
             else:
-            	print("Set speed of FAN" + fan + " to " + speed + "%.")
+                print("Set speed of FAN" + fan + " to " + speed + "%.")
 
 while args.auto is True:
-	temp = run_cmd.getTemp()
-	speeds = []
-	if temp < MINTEMP:
-		for i in range(2, 7):
-			speeds.append(str(i) + ":1")
-	elif temp > MAXTEMP:
-		for i in range(2, 7):
-            speeds.append(str(i) + ":100")
-	else:
-		base = temp - MINTEMP
-		max = MAXTEMP - MINTEMP
-		scaled = base / max
-		speed = int(scaled * (MAXSPEED - MINSPEED) + MINSPEED)
-		for i in range(2, 7):
-            speeds.append(str(i) + ":" + str(speed))
-	iterateFans(speeds)
+        temp = run_cmd.getTemp()
+        speeds = []
+        if temp < MINTEMP:
+                for i in range(2, 7):
+                        speeds.append(str(i) + ":1")
+        elif temp > MAXTEMP:
+                for i in range(2, 7):
+                        speeds.append(str(i) + ":100")
+        else:
+                base = temp - MINTEMP
+                max = MAXTEMP - MINTEMP
+                scaled = base / max
+                speed = int(scaled * (MAXSPEED - MINSPEED) + MINSPEED)
+                for i in range(2, 7):
+                        speeds.append(str(i) + ":" + str(speed))
+        iterateFans(speeds)
 
 if args.info is False and len(args.fanplusspeed) == 0:
-	print("Nothing to do! See --help for usage.")
-	quit
+        print("Nothing to do! See --help for usage.")
+        quit
 if len(args.fanplusspeed) != 0:
-	iterateFans(args.fanplusspeed)
+        iterateFans(args.fanplusspeed)
 if args.info is True:
-	if fanChanged is True:
-		print("\nWaiting for fans to adjust...")
-		time.sleep(5)
-	print("\nRetrieving fan speeds...\n")
-	for line in run_cmd.getFanInfo():
-		print(line)
+        if fanChanged is True:
+                print("\nWaiting for fans to adjust...")
+                time.sleep(5)
+        print("\nRetrieving fan speeds...\n")
+        for line in run_cmd.getFanInfo():
+                print(line)
