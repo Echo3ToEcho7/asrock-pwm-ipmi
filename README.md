@@ -1,6 +1,8 @@
 # Custom version
 This fork is updated to work with most recent BIOS and BMC. My needs are to watch my NVidia Tesla T4 that has a PWM fan connected to FAN3, so the auto function looks only at the NVidia SMI Temp and the speed of FAN3.
 
+Original fork: https://git.deck.sh/shark/asrock-pwm-ipmi.git
+
 # asrock-pwm-ipmi
 
 This is a script to control 4-pin PWM fans on ASRock Rack motherboards with IPMI. The BMC does not properly expose fan control, so they must be controlled using raw IPMI commands. This script is a user-friendly way to do that.
