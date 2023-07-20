@@ -5,9 +5,9 @@ import time
 
 # Variables to determine bounds
 MAXFAN = 6
-MINSPEED = 35
+MINSPEED = 50
 MAXSPEED = 100
-MINTEMP = 30
+MINTEMP = 45
 MAXTEMP = 65
 
 parser = argparse.ArgumentParser(description='Read information about and control fans on ASRock boards with IPMI.', prog='asrock-pwm-ipmi')
@@ -39,19 +39,17 @@ while args.auto is True:
         temp = run_cmd.getTemp()
         speeds = []
         if temp < MINTEMP:
-                for i in range(2, 7):
-                        speeds.append(str(i) + ":1")
+                speeds.append("3:50")
         elif temp > MAXTEMP:
-                for i in range(2, 7):
-                        speeds.append(str(i) + ":100")
+                speeds.append("3:100")
         else:
                 base = temp - MINTEMP
                 max = MAXTEMP - MINTEMP
                 scaled = base / max
                 speed = int(scaled * (MAXSPEED - MINSPEED) + MINSPEED)
-                for i in range(2, 7):
-                        speeds.append(str(i) + ":" + str(speed))
+                speeds.append("3:" + str(speed))
         iterateFans(speeds)
+        time.sleep(2)
 
 if args.info is False and len(args.fanplusspeed) == 0:
         print("Nothing to do! See --help for usage.")
